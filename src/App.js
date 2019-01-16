@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import { Admin, Resource } from 'react-admin';
+import { PostList, PostEdit, PostCreate } from './Components/posts';
+import { UserList } from './Components/users'; 
+//import PostIcon from '@material-ui/icons/Book';
+import UserIcon from '@material-ui/icons/Group';
+import { FirebaseDataProvider } from 'react-admin-firebase';
+import Dashboard from './Components/Dashboard';
+import authProvider from './Components/authProvider';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+
+const config = {
+    apiKey: "AIzaSyAjQ4cwHsjs9P97KoF6HJiaxFeA3itu_WY",
+    authDomain: "fir-auth-react-283b6.firebaseapp.com",
+    databaseURL: "https://fir-auth-react-283b6.firebaseio.com",
+    projectId: "fir-auth-react-283b6",
+    storageBucket: "fir-auth-react-283b6.appspot.com",
+    messagingSenderId: "509478731346"
+
+   
+  };
+
+const dataProvider = FirebaseDataProvider(config);
+const App = () => (
+<Admin 
+dashboard={Dashboard} 
+authProvider={authProvider} 
+dataProvider={dataProvider} >
+    <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} />
+    <Resource name="users" list={UserList} icon={UserIcon}/>
+    </Admin>
+
+
     );
-  }
-}
 
-export default App;
+    export default App;
+   
